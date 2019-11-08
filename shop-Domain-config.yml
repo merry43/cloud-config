@@ -1,0 +1,53 @@
+#eureka
+eureka:
+  client:
+    registerWithEureka: true # 服务注册开关
+    fetchRegistry: true # 服务发现开关
+    serviceUrl:
+      #单机版
+      defaultZone: http://eureka8761.com:8761/eureka/
+      #集群版
+      #defaultZone: http://eureka8761.com:8761/eureka/,http://eureka8762.com:8762/eureka/
+  instance:
+    instanceId: ${spring.application.name}:${server.port}-hystrix # 指定实例ID,就不会显示主机名了 打开熔断需添加-hystrix
+    preferIpAddress: true #访问路径可以显示IP地址
+
+#port
+server:
+  port: 9000
+
+#durid
+spring:
+  application:
+    name: domain-shop
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource # 当前数据源操作类型
+    driver-class-name: com.mysql.cj.jdbc.Driver # mysql驱动包
+    url: jdbc:mysql://192.168.88.230:3306/mine?serverTimezone=GMT%2B8 # 数据库
+    username: root
+    password: Sun@123
+    dbcp2:
+      min-idle: 5 # 数据库连接池的最小维持连接数
+      initial-size: 5 # 初始化连接数
+      max-total: 5 # 最大连接数
+      max-wait-millis: 150 # 等待连接获取的最大超时时间
+
+#mybatis
+#mybatis:
+#  config-location: classpath:mybatis/mybatis.cfg.xml # mybatis配置文件所在路径
+#  type-aliases-package: com.cloud.domain.entity # 所有Entity别名类所在包
+#  mapper-locations: classpath:mybatis/mapper/**/*.xml # mapper映射文件
+
+#Spring Data JPA
+jpa:
+  hibernate:
+    ddl-auto: update   #自动创建表
+    show-sql: true
+
+# 被监控服务上暴露端点[hystrix]
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: hystrix.stream
+
